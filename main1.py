@@ -201,3 +201,35 @@ def reset():
 def close():
     pygame.quit()
     sys.exit()
+    
+    def minesweeper():
+    loop = True
+
+    generateGrid()
+    
+    while loop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                close()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    close()
+                if event.key == pygame.K_r:
+                    reset()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                j = pos[0]/(width/size)
+                i = pos[1]/(width/size)
+                grid[i][j].checkForMine(i, j)
+
+        display.fill(background)
+
+        drawGrid()
+
+        if revealedSpots == safeSpots:
+            gameWon()
+        
+        pygame.display.update()
+        clock.tick(60)
+
+minesweeper()
